@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+<title>Birthday Surprise ❤️</title>
+<style>
+*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;padding:12px;background:linear-gradient(145deg,#ffe5f0,#fff8fc);font-family:Arial,sans-serif;color:#57334a}
+.shell{width:min(100%,430px);background:#fff;border:2px solid #5a354c;border-radius:10px;box-shadow:7px 8px 0 #e7a6c7;overflow:hidden}
+.top{background:#ff79b7;border-bottom:2px solid #5a354c;padding:9px 12px;font-size:12px;font-weight:bold;display:flex;justify-content:space-between}
+.page{display:none;min-height:590px;padding:22px 18px;text-align:center;align-items:center;justify-content:center;flex-direction:column}
+.page.active{display:flex;animation:fade .35s}@keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+h1{color:#e33f91;font-size:30px;margin:10px 0}h2{color:#e33f91;margin:8px}
+p{line-height:1.6;font-size:15px}.muted{font-size:12px;color:#98778d}
+button{background:#ff55a5;color:white;border:2px solid #5a354c;border-radius:6px;padding:12px 18px;font-weight:bold;box-shadow:3px 4px 0 #5a354c;margin:7px;cursor:pointer}
+button.alt{background:#fff;color:#d73587}
+.big{font-size:95px;line-height:1.2;touch-action:pan-y;user-select:none}.hint{background:#fff2f8;padding:8px;border-radius:6px;font-size:12px}
+#confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:10}
+.bit{position:absolute;top:-15px;width:8px;height:12px;animation:drop 3s linear forwards}@keyframes drop{to{transform:translateY(110vh) rotate(700deg);opacity:.2}}
+.slider{width:100%;display:flex;align-items:center;gap:8px;margin:12px 0}
+.memory{flex:1;height:245px;border:2px solid #5a354c;border-radius:8px;background:linear-gradient(135deg,#ffe2ef,#fff9fc);display:grid;place-items:center;overflow:hidden;font-size:60px;touch-action:pan-y}
+.memory img{width:100%;height:100%;object-fit:cover}.arrow{padding:9px 12px;margin:0}
+input{width:100%;padding:11px;border:1px solid #c99bb7;border-radius:6px;margin:7px 0;font-size:15px}
+#qr{margin:12px auto;min-height:150px;display:grid;place-items:center}#qr img,#qr canvas{max-width:100%}
+.letter{background:#fff7fb;border:1px solid #d8b5ca;border-radius:8px;padding:14px;text-align:left;white-space:pre-line;line-height:1.7}
+.footer{font-size:10px;color:#b28aa5;margin-top:15px}
+@media(max-height:700px){.page{min-height:520px;padding:15px}.memory{height:190px}}
+</style>
+</head>
+<body>
+<div id="confetti"></div>
+<main class="shell">
+<div class="top"><span>♡ BIRTHDAY SURPRISE</span><span>LOVE.EXE</span></div>
+<section class="page active" id="p0">
+<div class="big">💌</div><h1>A surprise for you!</h1><p>Swipe the card left or tap the button<br>to open your birthday surprise.</p>
+<div class="hint">👆 SWIPE LEFT</div><button onclick="go(1)">OPEN SURPRISE ✨</button><div class="footer">MADE WITH LOVE</div>
+</section>
+<section class="page" id="p1">
+<div class="big">🐱🎁</div><h2>Happy Birthday, <span class="name">My Love</span>!</h2><p>Ready for your special surprise?</p><button onclick="go(2)">YES, I'M READY 💗</button><div class="footer">A LITTLE MAGIC IS COMING</div>
+</section>
+<section class="page" id="p2">
+<h2>Swipe to cut the cake 🎂</h2><div id="cake" class="big" style="touch-action:none">🎂</div><p id="cakeMsg">Swipe the cake to the left<br>or tap the button!</p><button onclick="cutCake()">CUT THE CAKE 🍰</button><div class="footer">MAKE A WISH ✨</div>
+</section>
+<section class="page" id="p3">
+<div class="big">🎉🐱🎉</div><h1>Happy Birthday!</h1><p>To <span class="name">My Love</span> 💖<br>May your life be full of love,<br>laughter and beautiful memories.</p><button onclick="go(4)">SLIDE OUR MEMORIES 📸</button><div class="footer">LET'S CELEBRATE</div>
+</section>
+<section class="page" id="p4">
+<h2>Our Memories 🌷</h2><p class="muted">Add many photos, then swipe or play the slideshow</p>
+<div class="slider"><button class="arrow alt" onclick="prev()">‹</button><div class="memory" id="memory">📷<br><span style="font-size:13px">Add your photos below</span></div><button class="arrow alt" onclick="next()">›</button></div>
+<div id="count" class="muted">No photos yet</div><input id="photoInput" type="file" accept="image/*" multiple onchange="loadPhotos(this)">
+<button onclick="document.getElementById('photoInput').click()">ADD MORE PHOTOS 📸</button>
+<button id="playBtn" class="alt" onclick="toggleAuto()">▶ AUTO SLIDE</button><p class="hint">Swipe left/right to change photos. Auto slide moves every 1 second.</p><button onclick="go(5)">OUR LOVE LETTER 💌</button><div class="footer">MEMORIES THAT LAST</div>
+</section>
+<section class="page" id="p5">
+<h2>A Letter For You 💌</h2><div class="letter">My favorite person 💗
+
+Happy Birthday!
+
+You make my days brighter. I hope this new year brings you happiness, good health, love, and all the beautiful things your heart wishes for.
+
+Thank you for being you. Keep smiling and shining. You are so special to me.
+
+With all my love,
+Your person 💖</div><button onclick="go(6)">NEXT: CALL ME ❤️</button><div class="footer">FROM MY HEART</div>
+</section>
+<section class="page" id="p6">
+<div class="big">❤️</div><h1>You're so loved!</h1><p>Happy Birthday, my love.<br>Keep this little surprise forever.<br>May every wish in your heart come true. 🎊</p><button onclick="showConfetti()">MORE CONFETTI 🎉</button><button class="alt" onclick="go(0)">PLAY AGAIN ↻</button><div class="footer">HAPPY BIRTHDAY WITH LOVE</div>
+</section>
+<section class="page" id="p7">
+<div class="big">❤️</div><h1>You're so loved!</h1><p>Happy Birthday, my love.<br>Keep this little surprise forever.<br>May every wish in your heart come true. 🎊</p><button onclick="showConfetti()">MORE CONFETTI 🎉</button><button class="alt" onclick="go(0)">PLAY AGAIN ↻</button><div class="footer">HAPPY BIRTHDAY WITH LOVE</div>
+</section>
+</main>
+<script>
+const birthdayName="My Love";document.querySelectorAll(".name").forEach(x=>x.textContent=birthdayName);
+let page=0,mem=0,photos=[],startX=0,startY=0,autoTimer=null;
+function go(n){page=n;document.querySelectorAll(".page").forEach(x=>x.classList.remove("active"));document.getElementById("p"+n).classList.add("active");if(n===3)showConfetti();window.scrollTo(0,0)}
+function cutCake(){document.getElementById("cake").textContent="🍰✨";document.getElementById("cakeMsg").textContent="Wish made! Happy Birthday 💖";showConfetti();setTimeout(()=>go(3),1100)}
+function showConfetti(){let area=document.getElementById("confetti"),colors=["#ff4fa3","#ffc857","#a7e8bd","#8ecae6","#cdb4db"];for(let i=0;i<65;i++){let b=document.createElement("i");b.className="bit";b.style.left=Math.random()*100+"%";b.style.background=colors[Math.floor(Math.random()*colors.length)];b.style.animationDuration=2+Math.random()*3+"s";area.appendChild(b);setTimeout(()=>b.remove(),5500)}}
+function drawMemory(){let box=document.getElementById("memory");box.innerHTML="";if(photos.length&&photos[mem]){let img=document.createElement("img");img.src=photos[mem];img.alt="Memory "+(mem+1);box.appendChild(img)}else box.innerHTML='📷<br><span style="font-size:13px">Add your photos below</span>';document.getElementById("count").textContent=photos.length?"Memory "+(mem+1)+" / "+photos.length:"No photos yet"}
+function prev(){if(!photos.length)return;mem=(mem-1+photos.length)%photos.length;drawMemory()}function next(){if(!photos.length)return;mem=(mem+1)%photos.length;drawMemory()}
+document.getElementById("memory").addEventListener("click",()=>document.getElementById("photoInput").click());
+function loadPhotos(inp){if(inp.files){for(let file of inp.files){if(file.type.startsWith("image/"))photos.push(URL.createObjectURL(file))}mem=Math.max(0,photos.length-1);drawMemory();inp.value=""}}
+function toggleAuto(){if(autoTimer){clearInterval(autoTimer);autoTimer=null;document.getElementById("playBtn").textContent="▶ AUTO SLIDE"}else{if(!photos.length){alert("First add some photos.");return}next();autoTimer=setInterval(next,1000);document.getElementById("playBtn").textContent="⏸ PAUSE SLIDE"}}
+function swipe(el,left,right){el.addEventListener("touchstart",e=>{startX=e.touches[0].clientX;startY=e.touches[0].clientY},{passive:true});el.addEventListener("touchend",e=>{let dx=e.changedTouches[0].clientX-startX,dy=e.changedTouches[0].clientY-startY;if(Math.abs(dx)>45&&Math.abs(dx)>Math.abs(dy)){if(dx<0)left();else right()}},{passive:true})}
+swipe(document.getElementById("p0"),()=>go(1),()=>{});
+swipe(document.getElementById("cake"),cutCake,()=>{});
+swipe(document.getElementById("memory"),next,prev);
+function makeQR(){let phone=document.getElementById("phone").value.trim();if(!phone){alert("Enter your phone number first.");return}if(!/^\+?[0-9]{7,15}$/.test(phone)){alert("Use digits and optional + country code, 7–15 digits.");return}let q=document.getElementById("qr");q.innerHTML="";let link="tel:"+phone;let img=document.createElement("img");img.alt="QR code to call "+phone;img.width=180;img.height=180;img.src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data="+encodeURIComponent(link);q.appendChild(img);let note=document.createElement("div");note.className="muted";note.textContent="QR contains: "+link;q.appendChild(note)}
+</script>
+</body></html>
